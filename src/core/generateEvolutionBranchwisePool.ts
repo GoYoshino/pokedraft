@@ -1,15 +1,6 @@
 import { Pokemon } from "./pokemon";
 import { PokemonDatabase } from "./pokemonDatabase";
-
-const isFullyEvolved = (pokemon: Pokemon, family: Array<Pokemon>): boolean => {
-    for (let i = 0; i < family.length; i++) {
-        const targetPokemon = family[i]
-        if (targetPokemon.evolves_from == pokemon.id) {
-            return false
-        }
-    }
-    return true
-}
+import { isFullyEvolved } from "./utils";
 
 export const generateEvolutionBranchwisePool = (database: PokemonDatabase): Pokemon[][] => {
     const families = database.getFamilyBuckets()

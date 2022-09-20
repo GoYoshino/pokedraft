@@ -1,3 +1,5 @@
+import { Pokemon } from "./pokemon";
+
 export function shuffle<T>(array: Array<T>): Array<T> {
     let currentIndex = array.length, randomIndex;
   
@@ -15,3 +17,13 @@ export function shuffle<T>(array: Array<T>): Array<T> {
   
     return array;
   }
+
+export function isFullyEvolved(pokemon: Pokemon, family: Array<Pokemon>): boolean {
+  for (let i = 0; i < family.length; i++) {
+      const targetPokemon = family[i]
+      if (targetPokemon.evolves_from == pokemon.id) {
+          return false
+      }
+  }
+  return true
+}

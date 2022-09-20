@@ -35,7 +35,7 @@ function App() {
   }, [])
   
   const onRandomizeClicked = () => {
-    const randomizeResult = randomize({combineFamily: true, numberOfSlots: numberOfSlots}, rootPokemonDB)
+    const randomizeResult = randomize({combineFamily: true, omitUnevolved: true, numberOfSlots: numberOfSlots}, rootPokemonDB)
     const listItems = new Array<PokemonListItem>()
 
     randomizeResult.forEach((record: Pokemon) => {

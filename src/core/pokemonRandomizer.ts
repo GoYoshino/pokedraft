@@ -1,10 +1,11 @@
 import { generateEvolutionBranchwisePool } from "./generateEvolutionBranchwisePool";
 import { Pokemon } from "./pokemon";
 import { PokemonDatabase } from "./pokemonDatabase";
-import { shuffle } from "./shuffle";
+import { isFullyEvolved, shuffle } from "./utils";
 
 export type RandomizeOptions = {
     combineFamily: boolean,
+    omitUnevolved: boolean,
     numberOfSlots: number
 }
 
@@ -16,12 +17,18 @@ export function randomize(options: RandomizeOptions, database: PokemonDatabase):
         const chosenBranches = shuffled.slice(0, options.numberOfSlots)
         const result = new Map<number, Pokemon>()
         chosenBranches.forEach(branch => {
-            branch.forEach(pokemon => {
-                if (pokemon == undefined) {
-                    console.log(chosenBranches)
-                }
-                result.set(pokemon.id, pokemon)
-            })
+            if (options.omitUnevolved) {
+                branch.forEach(pokemon => {
+                    if (!isFullyEvolved(pokemon, branch)) {
+                        return
+                    }
+                    result.set(pokemon.id, pokemon)
+                })
+            } else {
+                branch.forEach(pokemon => {
+                    result.set(pokemon.id, pokemon)
+                })
+            }
         })
         const output = Array.from(result.values())
         output.sort((a, b) => a.id - b.id)
