@@ -36,7 +36,7 @@ function App() {
   }, [])
   
   const onRandomizeClicked = () => {
-    const randomizeResult = rootPokemonDB.randomize(10)
+    const randomizeResult = rootPokemonDB.randomize(30)
     const listItems = new Array<PokemonListItem>()
 
     randomizeResult.forEach((record) => {

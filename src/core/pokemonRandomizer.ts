@@ -36,8 +36,8 @@ export class PokemonRandomizer {
     static async fromFile(dataPath: string): Promise<PokemonRandomizer> {
         const pokemons = new Map<number, Pokemon>()
         
-        const data = await d3.csv(dataPath + "/pokemon_species.csv")
-        data.forEach((row: any) => {
+        const baseData = await d3.csv(dataPath + "/pokemon_species.csv")
+        baseData.forEach((row: any) => {
             pokemons.set(parseInt(row["id"]), {
                 id: parseInt(row["id"]),
                 identifier: row["identifier"],
@@ -50,7 +50,15 @@ export class PokemonRandomizer {
             })
         })
 
-        console.log(pokemons)
+        const nameData = await d3.csv(dataPath + "/pokemon_species_names.csv")
+        nameData.forEach((row: any) => {
+            if (row["local_language_id"] != "1") {
+                return
+            }
+            const targetPokemon = pokemons.get(parseInt(row["pokemon_species_id"]))!
+            targetPokemon.name = row["name"]
+        })
+
         return new PokemonRandomizer(pokemons)
     }
 
@@ -61,6 +69,5 @@ export class PokemonRandomizer {
         const chosenIDs = shuffledIDs.slice(0, limit)
 
         return chosenIDs.map(id => this.pokemons.get(id)!)
-
     }
 }
