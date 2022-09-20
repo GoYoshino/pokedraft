@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PokemonListItem } from "../../app/store";
 
-const initialState: Array<PokemonListItem> = [
+const initialState: { pokemonList: Array<PokemonListItem> }  = { pokemonList: [
     {
         id: "11111", pokemon: {
             id: 1, identifier: "bulbasaur", name: "フシギダネ", evolves_from: null, types: ["くさ", "どく"],
@@ -26,12 +26,18 @@ const initialState: Array<PokemonListItem> = [
             is_uncommon: false, is_legendary: false, is_mythical: false
         }
     }
-]
+]}
 
 const pokemonListSlice = createSlice({
     name: "pokemonList",
     initialState,
-    reducers: {}
+    reducers: {
+        randomized(state, action) {
+            state.pokemonList = action.payload
+        }
+    }
 })
+
+export const { randomized } = pokemonListSlice.actions
 
 export default pokemonListSlice.reducer

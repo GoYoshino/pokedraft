@@ -1,9 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { PokemonList } from './features/pokemonList/PokemonList';
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import pokemonListSlice, { randomized } from './features/pokemonList/pokemonListSlice';
+import { PokemonListItem } from './app/store';
+import { nanoid } from '@reduxjs/toolkit'
+import { PokemonRandomizer } from "./core/pokemonRandomizer"
+import { setConstantValue } from 'typescript';
+import { useSelector } from 'react-redux';
+import { setRootDB } from './features/pokemonList/pokemonDatabaseSlice';
+
+type PokemonDBResult = {
+  id: number,
+  identifier: string,
+  evolves_from: number,
+  is_uncommon: number,
+  is_legendary: number,
+  is_mythical: number,
+  name: string
+}
 
 function App() {
+  const [ rootPokemonDB, setRootPokemonDB ] = useState(new PokemonRandomizer(null))
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    console.log("useeffect")
+    const loadDB = async () => {
+      const rootPokemonDB = await PokemonRandomizer.fromFile("data")
+      setRootPokemonDB(rootPokemonDB)
+      console.log("callback")
+    }
+    loadDB()
+  }, [])
+  
+  const onRandomizeClicked = () => {
+    const randomizeResult = rootPokemonDB.randomize(10)
+    const listItems = new Array<PokemonListItem>()
+
+    randomizeResult.forEach((record) => {
+      listItems.push({
+        id: nanoid(),
+        pokemon: record
+      })
+          
+    })
+    console.log(listItems)
+    dispatch(
+      randomized(listItems)
+    )
+  }
+
   return (
     <div className="App">
       <script
@@ -26,8 +74,13 @@ function App() {
         <div className="row">
           <div className="col-8">
             <div className="row" id="div-pokemon-list">
-              <PokemonList />
+              <React.Fragment>
+                <PokemonList />
+              </React.Fragment>
             </div>
+          </div>
+          <div className="col-4">
+          <div className="row"><button type="button" className="btn btn-primary" onClick={onRandomizeClicked}>抽選</button></div>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { useAppSelector } from "../../app/hooks"
 
 export const PokemonList = () => {
-    const pokemons = useAppSelector(state => state.pokemonList);
+    const pokemons = useAppSelector(state => state.pokemonList.pokemonList);
 
     const renderedPokemons = pokemons.map(listItem => (
         <div className="col-xs-1 pokemon-icon" key={listItem.id}>
