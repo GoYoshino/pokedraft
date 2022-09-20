@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+    <title>StanGenerator</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+        crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../public/css/brazil-standard.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="div-header" class="row bg-dark text-light">
+            <h1>ブラジルスタンジェネレータ</h1>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <!--div class="row">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item active">
+                            <a class="nav-link active">抽選結果</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">BANリスト</a>
+                        </li>
+                    </ul>
+                </div-->
+                <div class="row" id="div-pokemon-list">
+                    <div class="col-xs-1 bg-primary pokemon-icon"><img src="../public/img/icons/bulbasaur.png" /></div>
+                    <div class="col-xs-1 bg-secondary pokemon-icon"><img src="../public/img/icons/pikachu.png" /></div>
+                    <div class="col-xs-1 bg-primary pokemon-icon"><img src="../public/img/icons/bagon.png" /></div>
+                    <div class="col-xs-1 bg-secondary pokemon-icon"><img src="../public/img/icons/mimikyu.png" /></div>
+                    <div class="col-xs-1 bg-primary pokemon-icon"><img src="../public/img/icons/bulbasaur.png" /></div>
+                    <div class="col-xs-1 bg-secondary pokemon-icon"><img src="../public/img/icons/pikachu.png" /></div>
+                    <div class="col-xs-1 bg-primary pokemon-icon"><img src="../public/img/icons/bagon.png" /></div>
+                    <div class="col-xs-1 bg-secondary pokemon-icon">
+                        <img class="opaque" src="../public/img/icons/mimikyu.png" />
+                        <div class="div-overlay">
+                            <img class="img-forbidden" src="../public/img/nc177500.png" />
+                        </div>
+                    </div>
+                    <div class="col-xs-1 bg-primary pokemon-icon"><img src="../public/img/icons/bulbasaur.png" /></div>
+                    <div class="col-xs-1 bg-secondary pokemon-icon"><img src="../public/img/icons/pikachu.png" /></div>
+                    <div class="col-xs-1 bg-primary pokemon-icon"><img src="../public/img/icons/bagon.png" /></div>
+                    <div class="col-xs-1 bg-secondary pokemon-icon"><img src="../public/img/icons/mimikyu.png" /></div>
+                    <div class="col-xs-1 bg-primary pokemon-icon"><img src="../public/img/icons/bulbasaur.png" /></div>
+                    <div class="col-xs-1 bg-secondary pokemon-icon"><img src="../public/img/icons/pikachu.png" /></div>
+                    <div class="col-xs-1 bg-primary pokemon-icon"><img src="../public/img/icons/bagon.png" /></div>
+                    <div class="col-xs-1 bg-secondary pokemon-icon"><img src="../public/img/icons/mimikyu.png" /></div>
+                    <div class="col-xs-1 bg-primary pokemon-icon"><img src="../public/img/icons/bulbasaur.png" /></div>
+                    <div class="col-xs-1 bg-secondary pokemon-icon"><img src="../public/img/icons/pikachu.png" /></div>
+                    <div class="col-xs-1 bg-primary pokemon-icon"><img src="../public/img/icons/bagon.png" /></div>
+                    <div class="col-xs-1 bg-secondary pokemon-icon"><img src="../public/img/icons/mimikyu.png" /></div>
+                    
+                </div>
+                <div class="row">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">URL</span>
+                        <input type="text" class="form-control" aria-label="URL" aria-describedby="basic-addon1" placeholder="URL(シェア用)"/>
+                    </div>
+                </div>
+                <textarea class="form-control" placeholder="ここにコピペ可能なテキストが出ます"></textarea>
+            </div>
+            <div class="col-4">
+                <row class="row">
+                    <h2 class="bg-info">オプション</h2>
+                    <div class="dropdown">
+                        <select class="form-select" id="allowedGeneration" aria-label="世代">
+                            <option selected>第8世代(ソード・シールド)</option>
+                        </select>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">選出枠数</span>
+                            <input type="text" class="form-control" aria-label="選出枠数" aria-describedby="basic-addon1" value="30" />
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="treatFamiliesAsSingleSlot" checked/>
+                            <label class="form-check-label" for="treatFamiliesAsSingleSlot">進化系はまとめて1枠として扱う</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="considersTypeBalance" checked />
+                            <label class="form-check-label" for="considersTypeBalance">タイプのバランスを取る</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="allowsUncommon" />
+                            <label class="form-check-label" for="allowsUncommon">準伝あり</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="allowsLegendary" />
+                            <label class="form-check-label" for="allowsLegendary">禁伝あり</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="allowsMythical" />
+                            <label class="form-check-label" for="allowsMythical">幻あり</label>
+                        </div>
+                        <p class="fs-6 text-center text-pokemon-number">＜200体のポケモンが該当します＞</p>
+                        
+                    </div>
+                </row>
+                <row class="row"><button type="button" class="btn btn-primary">抽選</button></row>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
