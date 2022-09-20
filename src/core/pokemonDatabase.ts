@@ -19,11 +19,6 @@ function shuffle(array: Array<any>) {
   
     return array;
   }
-  
-  // Used like so
-  var arr = [2, 11, 37, 42];
-  shuffle(arr);
-  console.log(arr);
 
 export class PokemonDatabase {
 
@@ -83,6 +78,10 @@ export class PokemonDatabase {
         const chosenIDs = shuffledIDs.slice(0, limit)
 
         return chosenIDs.map(id => this.__pokemons.get(id)!)
+    }
+
+    get(id: number): Pokemon {
+        return this.__pokemons.get(id)!
     }
 
     getFamilyBuckets(): Map<number, Pokemon[]> {

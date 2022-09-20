@@ -17,8 +17,8 @@ describe("PokemonDatabaseのテスト", () => {
         testData.set(2, fabricate(2, 1, 1))
         testData.set(3, fabricate(3, 1, 2))
         testData.set(4, fabricate(4, 2, null))
-        testData.set(5, fabricate(5, 2, 5))
-        testData.set(6, fabricate(6, 2, 6))
+        testData.set(5, fabricate(5, 2, 4))
+        testData.set(6, fabricate(6, 2, 5))
         testData.set(7, fabricate(7, 3, null))
         testData.set(8, fabricate(8, 3, 7))
 
