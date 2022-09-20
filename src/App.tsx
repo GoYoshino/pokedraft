@@ -8,16 +8,7 @@ import { nanoid } from '@reduxjs/toolkit'
 import { PokemonDatabase } from "./core/pokemonDatabase"
 import { Pokemon } from './core/pokemon';
 import { randomize } from './core/pokemonRandomizer';
-
-type PokemonDBResult = {
-  id: number,
-  identifier: string,
-  evolves_from: number,
-  is_uncommon: number,
-  is_legendary: number,
-  is_mythical: number,
-  name: string
-}
+import { axisLeft } from 'd3';
 
 function App() {
   const [ rootPokemonDB, setRootPokemonDB ] = useState(new PokemonDatabase(null))
@@ -35,7 +26,15 @@ function App() {
   }, [])
   
   const onRandomizeClicked = () => {
-    const randomizeResult = randomize({combineFamily: true, omitUnevolved: true, numberOfSlots: numberOfSlots}, rootPokemonDB)
+    const randomizeResult = randomize({
+      combineFamily: true,
+      omitUnevolved: true,
+      numberOfSlots: numberOfSlots,
+      restrictToSwSh: true,
+      allowsMythical: false,
+      allowsLegendary: false,
+      allowsUncommon: false
+    }, rootPokemonDB)
     const listItems = new Array<PokemonListItem>()
 
     randomizeResult.forEach((record: Pokemon) => {

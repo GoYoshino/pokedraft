@@ -33,7 +33,9 @@ describe("PokemonRandomizerのテスト", () => {
 
         const database = new PokemonDatabase(testData)
 
-        const result = randomize({combineFamily: true, omitUnevolved: false, numberOfSlots: 8}, database)
+        const result = randomize({
+            combineFamily: true, omitUnevolved: false, numberOfSlots: 8,
+            restrictToSwSh: false, allowsLegendary: false, allowsMythical: true, allowsUncommon: true}, database)
 
         expect(result.length).toBe(15)
         expect(result).toEqual(Array.from(testData.values()))
@@ -60,7 +62,9 @@ describe("PokemonRandomizerのテスト", () => {
 
         const database = new PokemonDatabase(testData)
 
-        const result = randomize({combineFamily: true, omitUnevolved: true, numberOfSlots: 8}, database)
+        const result = randomize({
+            combineFamily: true, omitUnevolved: true, numberOfSlots: 8,
+            restrictToSwSh: false, allowsLegendary: true, allowsMythical: true, allowsUncommon: true}, database)
 
         expect(result.length).toBe(8)
         expect(result).toContain(testData.get(3))
@@ -94,7 +98,9 @@ describe("PokemonRandomizerのテスト", () => {
 
         const database = new PokemonDatabase(testData)
 
-        const result = randomize({combineFamily: false, omitUnevolved: false, numberOfSlots: 10}, database)
+        const result = randomize({
+            combineFamily: false, omitUnevolved: false, numberOfSlots: 10,
+            restrictToSwSh: false, allowsLegendary: true, allowsMythical: true, allowsUncommon: true}, database)
 
         expect(result.length).toBe(10)
     })
