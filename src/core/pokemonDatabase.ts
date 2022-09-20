@@ -1,6 +1,7 @@
 import internal from "stream"
 import { Pokemon } from "./pokemon"
 import * as d3 from "d3"
+import { PoolRestriction } from "./poolRestriction";
 
 function shuffle(array: Array<any>) {
     let currentIndex = array.length, randomIndex;
@@ -52,8 +53,8 @@ export class PokemonDatabase {
                 evolves_from: parseInt(row["evolves_from_species_id"]),
                 evolution_chain_id: parseInt(row["evolution_chain_id"]),
                 is_uncommon: false,
-                is_legendary: (row["is_legendary"]) ? true : false,
-                is_mythical: (row["is_mythical"]) ? true : false,
+                is_legendary: (row["is_legendary"] == "1") ? true : false,
+                is_mythical: (row["is_mythical"] == "1") ? true : false,
                 name: row["identifier"],
                 types: ["ノーマル", "ひこう"]
             })
@@ -66,6 +67,15 @@ export class PokemonDatabase {
             }
             const targetPokemon = pokemons.get(parseInt(row["pokemon_species_id"]))!
             targetPokemon.name = row["name"]
+        })
+
+        const uncommonData = await d3.csv(dataPath + "/pokemon_uncommon.csv")
+        uncommonData.forEach((row: any) => {
+            if (row["is_uncommon"] != "1") {
+                return
+            }
+            const targetPokemon = pokemons.get(parseInt(row["pokemon_id"]))!
+            targetPokemon.is_uncommon = true
         })
 
         return new PokemonDatabase(pokemons)
@@ -90,5 +100,18 @@ export class PokemonDatabase {
 
     getFamilyBuckets(): Map<number, Pokemon[]> {
         return new Map(this.__families)
+    }
+
+    restrict(restriction: PoolRestriction): PokemonDatabase {
+        const restrictedMap = new Map<number, Pokemon>()
+
+        this.__pokemons.forEach(pokemon => {
+            if (restriction.isBanned(pokemon)) {
+                return
+            }
+            restrictedMap.set(pokemon.id, pokemon)
+        })
+
+        return new PokemonDatabase(restrictedMap)
     }
 }

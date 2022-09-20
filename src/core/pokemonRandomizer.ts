@@ -1,15 +1,27 @@
+import { IDS_ALLOWED_IN_SWSH } from "./versions/swsh";
 import { generateEvolutionBranchwisePool } from "./generateEvolutionBranchwisePool";
+import { LegendaryRestriction, MythicalRestriction, UncommonRestriction } from "./legendaryRestriction";
 import { Pokemon } from "./pokemon";
 import { PokemonDatabase } from "./pokemonDatabase";
 import { isFullyEvolved, shuffle } from "./utils";
+import { WhitelistRestriction } from "./whitelistRestriction";
 
 export type RandomizeOptions = {
     combineFamily: boolean,
     omitUnevolved: boolean,
-    numberOfSlots: number
+    numberOfSlots: number,
+    restrictToSwSh: boolean,
+    allowsMythical: boolean,
+    allowsLegendary: boolean,
+    allowsUncommon: boolean
 }
 
-export function randomize(options: RandomizeOptions, database: PokemonDatabase): Pokemon[] {
+export function randomize(options: RandomizeOptions, originalDatabase: PokemonDatabase): Pokemon[] {
+    let database = (options.restrictToSwSh) ? originalDatabase.restrict(new WhitelistRestriction(IDS_ALLOWED_IN_SWSH)) : originalDatabase
+    database = (options.allowsMythical) ? database : database.restrict(new MythicalRestriction())
+    database = (options.allowsLegendary) ? database : database.restrict(new LegendaryRestriction())
+    database = (options.allowsUncommon) ? database : database.restrict(new UncommonRestriction())
+
     if (options.combineFamily) {
         const pool = generateEvolutionBranchwisePool(database)
         const shuffled = shuffle<Pokemon[]>(pool)
