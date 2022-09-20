@@ -84,6 +84,10 @@ export class PokemonDatabase {
         return this.__pokemons.get(id)!
     }
 
+    getAll(): Map<number, Pokemon> {
+        return new Map(this.__pokemons)
+    }
+
     getFamilyBuckets(): Map<number, Pokemon[]> {
         return new Map(this.__families)
     }
