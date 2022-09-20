@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { Pokemon } from '../core/pokemon';
 import pokemonListReducer from '../features/pokemonList/pokemonListSlice';
+import randomizeOptionReducer from "../features/randomizeOption/randomizeOptionSlice"
 
 export type PokemonListItem = {
   id: string,
@@ -10,6 +11,7 @@ export type PokemonListItem = {
 export const store = configureStore({
   reducer: {
     pokemonList: pokemonListReducer,
+    randomizeOptions: randomizeOptionReducer
   },
 });
 

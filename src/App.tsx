@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { PokemonList } from './features/pokemonList/PokemonList';
-import { useAppDispatch } from './app/hooks';
+import { useAppDispatch, useAppSelector } from './app/hooks';
 import { randomized } from './features/pokemonList/pokemonListSlice';
 import { PokemonListItem } from './app/store';
 import { nanoid } from '@reduxjs/toolkit'
 import { PokemonDatabase } from "./core/pokemonDatabase"
 import { Pokemon } from './core/pokemon';
 import { randomize } from './core/pokemonRandomizer';
-import { axisLeft } from 'd3';
 
 function App() {
   const [ rootPokemonDB, setRootPokemonDB ] = useState(new PokemonDatabase(null))
   const [ numberOfSlots, setNumberOfSlots ] = useState(30)
+  const [ allowsUncommon, setAllowsUncommon ] = useState(false)
+  const [ allowsLegendary, setAllowsLegendary ] = useState(false)
+  const [ allowsMythical, setAllowsMythical ] = useState(false)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -31,9 +33,9 @@ function App() {
       omitUnevolved: true,
       numberOfSlots: numberOfSlots,
       restrictToSwSh: true,
-      allowsMythical: false,
-      allowsLegendary: false,
-      allowsUncommon: false
+      allowsMythical: allowsMythical,
+      allowsLegendary: allowsLegendary,
+      allowsUncommon: allowsUncommon
     }, rootPokemonDB)
     const listItems = new Array<PokemonListItem>()
 
@@ -50,8 +52,20 @@ function App() {
     )
   }
 
-  const onSlotChanged = (e: any) => {
+  const onNumberOfSlotChanged = (e: any) => {
     setNumberOfSlots(e.target.value)
+  }
+
+  const onAllowsUncommonChanged = (e: any) => {
+    setAllowsUncommon(e.target.checked)
+  }
+
+  const onAllowsLegendaryChanged = (e: any) => {
+    setAllowsLegendary(e.target.checked)
+  }
+
+  const onAllowsMythicalChanged = (e: any) => {
+    setAllowsMythical(e.target.checked)
   }
 
   return (
@@ -86,7 +100,19 @@ function App() {
             <div className="row">
               <div className="input-group mb-3">
                 <span className="input-group-text" id="basic-addon1">選出枠数</span>
-                <input type="text" className="form-control" aria-label="選出枠数" aria-describedby="basic-addon1" value={numberOfSlots} onChange={onSlotChanged} />
+                <input type="text" className="form-control" aria-label="選出枠数" aria-describedby="basic-addon1" value={numberOfSlots} onChange={onNumberOfSlotChanged} />
+              </div>
+              <div className="form-check">
+                  <input className="form-check-input" type="checkbox" id="allowsUncommon" checked={allowsUncommon} onChange={onAllowsUncommonChanged} />
+                  <label className="form-check-label" htmlFor="allowsUncommon">準伝あり</label>
+              </div>
+              <div className="form-check">
+                  <input className="form-check-input" type="checkbox" id="allowsLegendary" checked={allowsLegendary} onChange={onAllowsLegendaryChanged} />
+                  <label className="form-check-label" htmlFor="allowsLegendary">禁伝あり</label>
+              </div>
+              <div className="form-check">
+                  <input className="form-check-input" type="checkbox" id="allowsMythical" checked={allowsMythical} onChange={onAllowsMythicalChanged}/>
+                  <label className="form-check-label" htmlFor="allowsMythical">幻あり</label>
               </div>
               <button type="button" className="btn btn-primary" onClick={onRandomizeClicked}>抽選</button>
             </div>
