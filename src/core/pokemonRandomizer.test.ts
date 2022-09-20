@@ -1,6 +1,6 @@
 import { Pokemon } from "./pokemon"
 import { PokemonDatabase } from "./pokemonDatabase"
-import { PokemonRandomizer, StanadrdPokemonRandomizer } from "./pokemonRandomizer"
+import { randomize } from "./pokemonRandomizer"
 
 const fabricate = (id: number, evolution_chain_id: number, evolves_from: number | null): Pokemon => {
     return {
@@ -32,9 +32,8 @@ describe("PokemonRandomizerのテスト", () => {
         testData.set(471, fabricate(471, 67, 133))
 
         const database = new PokemonDatabase(testData)
-        const randomizer: PokemonRandomizer = new StanadrdPokemonRandomizer()
 
-        const result = randomizer.randomize({combineFamily: true, numberOfSlots: 8}, database)
+        const result = randomize({combineFamily: true, numberOfSlots: 8}, database)
 
         expect(result.length).toBe(15)
         expect(result).toEqual(Array.from(testData.values()))
@@ -60,9 +59,8 @@ describe("PokemonRandomizerのテスト", () => {
         testData.set(471, fabricate(471, 67, 133))
 
         const database = new PokemonDatabase(testData)
-        const randomizer: PokemonRandomizer = new StanadrdPokemonRandomizer()
 
-        const result = randomizer.randomize({combineFamily: false, numberOfSlots: 10}, database)
+        const result = randomize({combineFamily: false, numberOfSlots: 10}, database)
 
         expect(result.length).toBe(10)
     })

@@ -7,6 +7,7 @@ import { PokemonListItem } from './app/store';
 import { nanoid } from '@reduxjs/toolkit'
 import { PokemonDatabase } from "./core/pokemonDatabase"
 import { Pokemon } from './core/pokemon';
+import { randomize } from './core/pokemonRandomizer';
 
 type PokemonDBResult = {
   id: number,
@@ -34,7 +35,7 @@ function App() {
   }, [])
   
   const onRandomizeClicked = () => {
-    const randomizeResult = rootPokemonDB.randomize(numberOfSlots)
+    const randomizeResult = randomize({combineFamily: true, numberOfSlots: numberOfSlots}, rootPokemonDB)
     const listItems = new Array<PokemonListItem>()
 
     randomizeResult.forEach((record: Pokemon) => {

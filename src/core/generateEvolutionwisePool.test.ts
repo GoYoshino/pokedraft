@@ -92,4 +92,15 @@ describe("generateFamilywisePoolのテスト", () => {
         expect(pool[3][1].id).toBe(471)
     
     })
+
+    test("無進化ポケモンが混じっても壊れない", () => {
+        const testData = new Map<number, Pokemon>()
+        testData.set(133, fabricate(150, 67, null))
+
+        const database = new PokemonDatabase(testData)
+        const pool = generateEvolutionBranchwisePool(database)
+    
+        expect(pool.length).toBe(1)
+        expect(pool[0][0].id).toBe(150)
+    })
 })
