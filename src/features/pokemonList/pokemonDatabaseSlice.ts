@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PokemonListItem } from "../../app/store";
-import { PokemonRandomizer } from "../../core/pokemonRandomizer";
+import { PokemonDatabase } from "../../core/pokemonDatabase";
 
-const initialState: PokemonRandomizer = new PokemonRandomizer(null)
+const initialState: PokemonDatabase = new PokemonDatabase(null)
 
 const pokemonDatabaseSlice = createSlice({
     name: "pokemonDatabase",

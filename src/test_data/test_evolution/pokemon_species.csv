@@ -1,0 +1,16 @@
+id,identifier,generation_id,evolves_from_species_id,evolution_chain_id,color_id,shape_id,habitat_id,gender_rate,capture_rate,base_happiness,is_baby,hatch_counter,has_gender_differences,growth_rate_id,forms_switchable,is_legendary,is_mythical,order,conquest_order
+1,bulbasaur,1,,1,5,8,3,1,45,50,0,20,0,4,0,0,0,1,
+2,ivysaur,1,1,1,5,8,3,1,45,50,0,20,0,4,0,0,0,2,
+3,venusaur,1,2,1,5,8,3,1,45,50,0,20,1,4,1,0,0,3,
+4,charmander,1,,2,8,6,4,1,45,50,0,20,0,4,0,0,0,4,109
+5,charmeleon,1,4,2,8,6,4,1,45,50,0,20,0,4,0,0,0,5,110
+6,charizard,1,5,2,8,6,4,1,45,50,0,20,0,4,1,0,0,6,111
+7,squirtle,1,,3,2,6,9,1,45,50,0,20,0,4,0,0,0,7,
+8,wartortle,1,7,3,2,6,9,1,45,50,0,20,0,4,0,0,0,8,
+25,pikachu,1,172,10,10,8,2,4,190,50,0,10,1,2,0,0,0,26,16
+133,eevee,1,,67,3,8,8,1,45,50,0,35,0,2,0,0,0,157,1
+134,vaporeon,1,133,67,2,8,8,1,45,50,0,35,0,2,0,0,0,158,2
+135,jolteon,1,133,67,10,8,8,1,45,50,0,35,0,2,0,0,0,159,3
+136,flareon,1,133,67,8,8,8,1,45,50,0,35,0,2,0,0,0,160,4
+172,pichu,2,,10,10,8,2,4,190,50,1,10,0,2,0,0,0,25,15
+471,glaceon,4,133,67,2,8,,1,45,35,0,35,0,2,0,0,0,164,8

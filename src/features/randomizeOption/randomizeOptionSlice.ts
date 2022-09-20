@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PokemonListItem } from "../../app/store";
-import { PokemonRandomizer } from "../../core/pokemonRandomizer";
+import { PokemonDatabase } from "../../core/pokemonDatabase";
 
 type randomizeOptionState = {
     numberOfSlots: number

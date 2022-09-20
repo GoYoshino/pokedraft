@@ -5,7 +5,8 @@ import { useAppDispatch } from './app/hooks';
 import { randomized } from './features/pokemonList/pokemonListSlice';
 import { PokemonListItem } from './app/store';
 import { nanoid } from '@reduxjs/toolkit'
-import { PokemonRandomizer } from "./core/pokemonRandomizer"
+import { PokemonDatabase } from "./core/pokemonDatabase"
+import { Pokemon } from './core/pokemon';
 
 type PokemonDBResult = {
   id: number,
@@ -18,14 +19,14 @@ type PokemonDBResult = {
 }
 
 function App() {
-  const [ rootPokemonDB, setRootPokemonDB ] = useState(new PokemonRandomizer(null))
+  const [ rootPokemonDB, setRootPokemonDB ] = useState(new PokemonDatabase(null))
   const [ numberOfSlots, setNumberOfSlots ] = useState(30)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     console.log("useeffect")
     const loadDB = async () => {
-      const rootPokemonDB = await PokemonRandomizer.fromFile("data")
+      const rootPokemonDB = await PokemonDatabase.fromFile("data")
       setRootPokemonDB(rootPokemonDB)
       console.log("callback")
     }
@@ -36,7 +37,7 @@ function App() {
     const randomizeResult = rootPokemonDB.randomize(numberOfSlots)
     const listItems = new Array<PokemonListItem>()
 
-    randomizeResult.forEach((record) => {
+    randomizeResult.forEach((record: Pokemon) => {
       listItems.push({
         id: nanoid(),
         pokemon: record
