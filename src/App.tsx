@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { PokemonList } from './features/pokemonList/PokemonList';
-import { useAppDispatch, useAppSelector } from './app/hooks';
-import pokemonListSlice, { randomized } from './features/pokemonList/pokemonListSlice';
+import { useAppDispatch } from './app/hooks';
+import { randomized } from './features/pokemonList/pokemonListSlice';
 import { PokemonListItem } from './app/store';
 import { nanoid } from '@reduxjs/toolkit'
 import { PokemonRandomizer } from "./core/pokemonRandomizer"
-import { setConstantValue } from 'typescript';
-import { useSelector } from 'react-redux';
-import { setRootDB } from './features/pokemonList/pokemonDatabaseSlice';
 
 type PokemonDBResult = {
   id: number,
@@ -23,6 +19,7 @@ type PokemonDBResult = {
 
 function App() {
   const [ rootPokemonDB, setRootPokemonDB ] = useState(new PokemonRandomizer(null))
+  const [ numberOfSlots, setNumberOfSlots ] = useState(30)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -36,7 +33,7 @@ function App() {
   }, [])
   
   const onRandomizeClicked = () => {
-    const randomizeResult = rootPokemonDB.randomize(30)
+    const randomizeResult = rootPokemonDB.randomize(numberOfSlots)
     const listItems = new Array<PokemonListItem>()
 
     randomizeResult.forEach((record) => {
@@ -50,6 +47,10 @@ function App() {
     dispatch(
       randomized(listItems)
     )
+  }
+
+  const onSlotChanged = (e: any) => {
+    setNumberOfSlots(e.target.value)
   }
 
   return (
@@ -80,7 +81,14 @@ function App() {
             </div>
           </div>
           <div className="col-4">
-          <div className="row"><button type="button" className="btn btn-primary" onClick={onRandomizeClicked}>抽選</button></div>
+            <h2 className="bg-info">オプション</h2>
+            <div className="row">
+              <div className="input-group mb-3">
+                <span className="input-group-text" id="basic-addon1">選出枠数</span>
+                <input type="text" className="form-control" aria-label="選出枠数" aria-describedby="basic-addon1" value={numberOfSlots} onChange={onSlotChanged} />
+              </div>
+              <button type="button" className="btn btn-primary" onClick={onRandomizeClicked}>抽選</button>
+            </div>
           </div>
         </div>
       </div>
